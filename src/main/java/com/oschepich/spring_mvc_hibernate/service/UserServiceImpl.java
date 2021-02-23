@@ -39,7 +39,20 @@ public class UserServiceImpl implements UserService{
     //  метод изменения одного user-а в списка
 
     @Override
-    public void updateUser(User user) {
-        userDao.updateUser(user);
+    @Transactional
+    public void updateUser(int id, User user) {
+        userDao.updateUser(id,user);
+    }
+
+    @Override
+    @Transactional
+    public User show(int id) {
+        return userDao.show(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteUser(int id) {
+        userDao.deleteUser(id);
     }
 }

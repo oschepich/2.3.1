@@ -5,14 +5,10 @@ import com.oschepich.spring_mvc_hibernate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping("/")
 public class UserController {
 
 
@@ -24,49 +20,50 @@ public class UserController {
     }
 
     // Выводим список всех пользователей на WEB страницу
-    @GetMapping()
+
+    @GetMapping("/")
     public String showAllUser(Model model) {
         model.addAttribute("allUser", userService.getAllUser());
         return "showUsers";
     }
 
-    //
-//    @RequestMapping("/addNewUser")
-//    public String addNewUser(Model model){
-//        User user=new User();
-//        model.addAttribute("newUser",user);
-//    return "user-add";
-//    }
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") int id, Model model) {
+        model.addAttribute("user", userService.show(id));
+        return "new";
+    }
+
     @GetMapping("/new")
-    public String newUser(Model model) {
-        model.addAttribute("user", new User());
+    public String newUser(@ModelAttribute("user") User user) {
         return "new";
     }
 
     //    Сохранение пользователя
     @PostMapping()
     public String saveUser(@ModelAttribute("user") User user) {
-        if (user.getId()==0) {
-            userService.saveUser(user);
-        }
-        else userService.updateUser(user);
+        userService.saveUser(user);
+        return "redirect:/";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteUser(@PathVariable int id) {
+        userService.deleteUser(id);
+        return "redirect:/";
+    }
+    @RequestMapping(value = "/{id}/edit")
+    public String editUser(Model model, @PathVariable("id") int id) {
+        model.addAttribute("user", userService.show(id));
+        return ("update");
+    }
+
+    @PatchMapping("/{id}")
+    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id){
+        userService.updateUser(id,user);
         return "redirect:/";
     }
 
 
 }
-
-
-//    // Выводим список машин на WEB страницу взависимости от запроса
-//    @GetMapping("/")
-//    public String showAllUser(@RequestParam(value = "count", required = false) Integer count, Model model) {
-//        if (count == null) {
-//            model.addAttribute("list", carService.getCarServiceList());
-//        } else if (count < 5 && count > 0) {
-//            model.addAttribute("list", carService.showCars(count, carService.getCarServiceList()));
-//        } else model.addAttribute("list", carService.getCarServiceList());
-//
-//        return "indexCar";
 
 
 

@@ -1,5 +1,6 @@
 package com.oschepich.spring_mvc_hibernate.config;
 
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.ServletContext;
@@ -10,9 +11,10 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     // Метод, указывающий на класс конфигурации
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return null;
+        return new Class<?>[]{
+                SpringConfig.class
+        };
     }
-
 
     // Добавление конфигурации, в которой инициализируем ViewResolver, для корректного отображения jsp.
     @Override
@@ -29,6 +31,15 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
 
         return new String[]{"/"};
     }
+    @Override
+    public void onStartup(ServletContext aServletContext) throws ServletException {
+        super.onStartup(aServletContext);
+        registerHiddenFieldFilter(aServletContext);
+    }
 
+    private void registerHiddenFieldFilter(ServletContext aContext) {
+        aContext.addFilter("hiddenHttpMethodFilter",
+                new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null ,true, "/*");
+    }
 
 }

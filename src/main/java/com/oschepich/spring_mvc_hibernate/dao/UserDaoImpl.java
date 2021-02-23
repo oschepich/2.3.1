@@ -5,51 +5,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    private final EntityManagerFactory entityManager;
 
-    @Autowired
-    public UserDaoImpl(EntityManagerFactory entityManager) {
-        this.entityManager = entityManager;
-    }
-
-    //    private List<User> userList;
-
-    //    создаю список машин
-//    {
-//        userList = new ArrayList<>();
-//        userList.add(new User("Иван Петров", "г. Петровск", "1975Ivan@mail.ru"));
-//        userList.add(new User("Петр Иванов", "г. Ивановск", "1970Petr@mail.ru"));
-//        userList.add(new User("Иван Иванов", "г. Петровск на азове", "1980IVAN@mail.ru"));
-//        userList.add(new User("Петр Петров", "г. Иваново", "1990Petr@mail.ru"));
-//        userList.add(new User("Иван Петров-Иванов", "г. Петрово", "1999IVAN@mail.ru"));
-//    }
 // метод передачи списка машин
     @Override
     public List<User> getAllUser() {
-        TypedQuery<User> query = entityManager.createEntityManager().createQuery("from User", User.class);
+        TypedQuery<User> query = entityManager.createQuery("from User", User.class);
         List<User> list = query.getResultList();
         return list;
     }
 
     @Override
     public void saveUser(User user) {
-        User userSave = new User();
-        entityManager.createEntityManager().merge(user);
-        user.setId(userSave.getId());
-
+        entityManager.merge(user);
     }
 
     @Override
-    public void updateUser(User user) {
+    public void updateUser(int id, User user) {
+        User updateUser = entityManager.find(User.class, user.getId());;
+        user.setName(updateUser.getName());
+        user.setAddress(updateUser.getAddress());
+        user.setEmail(updateUser.getEmail());
+        entityManager.merge(user);
+    }
 
+    @Override
+    public User show(int id) {
+        return entityManager.find(User.class, id);
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        User user = entityManager.find(User.class, id);
+        entityManager.remove(user);
     }
 }
