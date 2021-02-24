@@ -21,7 +21,7 @@ y
 Isrc/main/java/com/oschepich/spring_mvc_hibernate/config/SpringConfig.java,6\c\6c102d15fada2e8b08ec55955c57c3bf999d4118
 V
 &src/main/webapp/WEB-INF/views/new.html,5\3\532ecf1f688e73cadab497ab6c4b0eaca78d2113
-[
-+src/main/webapp/WEB-INF/views/user-add.html,b\b\bb61f8b8f73df36ce2351b4e8dfecdcd63082f75
-X
-(src/main/webapp/WEB-INF/views/admin.html,d\0\d0c7aad1e00e0d1c03e7e004f51cc08e052e4190
+V
+&src/main/webapp/WEB-INF/views/adm.html,4\8\480f973bbc9d1f4c4b62458953c2a1124960e53c
+Y
+)src/main/webapp/WEB-INF/views/update.html,1\c\1c952e417db5864cb3d43304a566a5232fcc5e85

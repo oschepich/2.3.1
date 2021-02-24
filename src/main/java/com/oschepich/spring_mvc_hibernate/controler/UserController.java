@@ -50,7 +50,7 @@ public class UserController {
         userService.deleteUser(id);
         return "redirect:/";
     }
-    @RequestMapping(value = "/{id}/edit")
+    @PatchMapping(value = "/{id}/edit")
     public String editUser(Model model, @PathVariable("id") int id) {
         model.addAttribute("user", userService.show(id));
         return ("update");
