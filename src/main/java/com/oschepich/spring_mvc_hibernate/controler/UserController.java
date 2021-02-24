@@ -21,7 +21,7 @@ public class UserController {
 
     // Выводим список всех пользователей на WEB страницу
 
-    @GetMapping("/")
+    @GetMapping(value = "/")
     public String showAllUser(Model model) {
         model.addAttribute("allUser", userService.getAllUser());
         return "showUsers";
@@ -50,7 +50,7 @@ public class UserController {
         userService.deleteUser(id);
         return "redirect:/";
     }
-    @PatchMapping(value = "/{id}/edit")
+    @GetMapping(value = "/{id}/edit")
     public String editUser(Model model, @PathVariable("id") int id) {
         model.addAttribute("user", userService.show(id));
         return ("update");
@@ -58,7 +58,7 @@ public class UserController {
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id){
-        userService.updateUser(id,user);
+        userService.saveUser(user);
         return "redirect:/";
     }
 

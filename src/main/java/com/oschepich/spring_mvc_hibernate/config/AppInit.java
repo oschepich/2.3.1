@@ -31,6 +31,7 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
 
         return new String[]{"/"};
     }
+//    фильтр
     @Override
     public void onStartup(ServletContext aServletContext) throws ServletException {
         super.onStartup(aServletContext);

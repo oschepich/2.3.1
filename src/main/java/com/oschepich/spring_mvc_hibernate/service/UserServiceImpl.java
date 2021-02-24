@@ -3,7 +3,6 @@ package com.oschepich.spring_mvc_hibernate.service;
 import com.oschepich.spring_mvc_hibernate.dao.UserDao;
 import com.oschepich.spring_mvc_hibernate.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
@@ -19,10 +18,7 @@ public class UserServiceImpl implements UserService{
         this.userDao = userDao;
     }
 
-    ////    метод селекции списка машин взависимсти от заданных параметров
-//    public List<Car> showCars(int count, List<Car> carList) {
-//       return carList.stream().limit(count).collect(Collectors.toList());
-//    }
+
 //  метод передачи всего списка user-ов
     @Override
     @Transactional
@@ -30,26 +26,28 @@ public class UserServiceImpl implements UserService{
         return userDao.getAllUser();
     }
 
-    //  метод добавления одного user-а в списка
+ //  метод добавления одного user-а в списка
     @Override
     @Transactional
     public void saveUser(User user) {
         userDao.saveUser(user);
     }
-    //  метод изменения одного user-а в списка
 
+    //    метод обновления пользователя (пригодится на потом - пока не используется)
     @Override
     @Transactional
     public void updateUser(int id, User user) {
         userDao.updateUser(id,user);
     }
 
+    //  метод изменения одного user-а в списка
     @Override
     @Transactional
     public User show(int id) {
         return userDao.show(id);
     }
 
+    //  метод удаления одного user-а из списка
     @Override
     @Transactional
     public void deleteUser(int id) {
